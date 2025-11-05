@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LANDINGAI_API_KEY=${LANDINGAI_API_KEY}
+      - LANDINGAI_ENDPOINT=${LANDINGAI_ENDPOINT:-production}
+    volumes:
+      - ./app:/app/app
+      - ./crew:/app/crew
+      - ./services:/app/services
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
