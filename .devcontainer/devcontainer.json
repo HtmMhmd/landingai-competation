@@ -7,10 +7,20 @@
     "vscode": {
       "extensions": [
         "ms-python.python",
-        "ms-python.vscode-pylance"
-      ]
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": false,
+        "python.formatting.provider": "black"
+      }
     }
   },
   "forwardPorts": [8000],
-  "postCreateCommand": "pip install -r requirements.txt"
+  "postCreateCommand": "pip install -r requirements.txt",
+  "remoteEnv": {
+    "PYTHONPATH": "/app"
+  }
 }

@@ -7,5 +7,6 @@ crewai==0.28.8
 python-multipart==0.0.6
 landingai-ade==0.1.0
 python-dotenv==1.0.0
+pyyaml==6.0.1
 pytest==7.4.3
 pytest-asyncio==0.21.1

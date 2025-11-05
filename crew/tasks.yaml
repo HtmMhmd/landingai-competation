@@ -1,0 +1,41 @@
+extract_documents:
+  description: |
+    Extract structured data from the provided financial documents.
+    Process each document through LandingAI ADE to obtain:
+    - Text chunks with structured information
+    - Tables and financial data
+    - Key-value pairs
+    - Document metadata
+    
+    Documents to process: {file_paths}
+  expected_output: "A list of extracted document data in JSON format with all structured information"
+  agent: document_extractor
+
+analyze_financial_data:
+  description: |
+    Analyze the extracted financial data based on the requested analysis type: {analysis_type}
+    
+    Perform comprehensive analysis including:
+    - Key financial metrics evaluation
+    - Risk assessment (if applicable)
+    - Compliance and covenant checking
+    - Trend identification
+    - Recommendations and insights
+    
+    Extracted data: {extracted_docs}
+  expected_output: "Detailed financial analysis report with insights, metrics, and recommendations in JSON format"
+  agent: financial_analyst
+
+generate_report:
+  description: |
+    Generate a comprehensive HTML report from the financial analysis.
+    
+    Include:
+    - Executive summary
+    - Key findings and metrics
+    - Detailed analysis results
+    - Visual formatting for readability
+    
+    Analysis data: {analysis}
+  expected_output: "Well-formatted HTML report suitable for stakeholder review"
+  agent: report_generator

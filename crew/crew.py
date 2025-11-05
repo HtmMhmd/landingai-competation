@@ -1,18 +1,34 @@
+import os
+import yaml
 from typing import List, Dict, Any
-from crew.tasks import ExtractTask, AnalyzeTask, ReportTask
+from pathlib import Path
+from crew.tasks import execute_extract_task, execute_analyze_task, execute_report_task
+
+def load_agents_config() -> Dict[str, Any]:
+    config_path = Path(__file__).parent / "agents.yaml"
+    with open(config_path, 'r') as f:
+        return yaml.safe_load(f)
+
+def load_tasks_config() -> Dict[str, Any]:
+    config_path = Path(__file__).parent / "tasks.yaml"
+    with open(config_path, 'r') as f:
+        return yaml.safe_load(f)
 
 async def run_crew(file_paths: List[str], analysis_type: str) -> Dict[str, Any]:
-    extract_task = ExtractTask()
-    analyze_task = AnalyzeTask()
-    report_task = ReportTask()
+    agents_config = load_agents_config()
+    tasks_config = load_tasks_config()
     
-    extracted_docs = await extract_task.run(file_paths)
-    analysis = await analyze_task.run(extracted_docs, analysis_type)
-    report = await report_task.run(analysis)
+    extracted_docs = await execute_extract_task(file_paths)
+    
+    analysis = await execute_analyze_task(extracted_docs, analysis_type)
+    
+    report = await execute_report_task(analysis)
     
     return {
         "status": "completed",
         "analysis_type": analysis_type,
+        "agents_used": list(agents_config.keys()),
+        "tasks_executed": list(tasks_config.keys()),
         "extracted_documents": extracted_docs,
         "analysis": analysis,
         "report_html": report

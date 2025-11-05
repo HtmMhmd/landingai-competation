@@ -30,9 +30,11 @@ User -> FastAPI Backend -> CrewAI Orchestrator
 ├── app/
 │   └── main.py              # FastAPI application
 ├── crew/
-│   ├── agents.py            # CrewAI agents
-│   ├── tasks.py             # CrewAI tasks
-│   └── crew.py              # Crew orchestration
+│   ├── agents.yaml          # CrewAI agent configurations
+│   ├── tasks.yaml           # CrewAI task configurations
+│   ├── agents.py            # Agent tool implementations
+│   ├── tasks.py             # Task execution functions
+│   └── crew.py              # Crew orchestration with YAML loading
 ├── services/
 │   ├── landing_ai.py        # LandingAI ADE wrapper
 │   └── openai_llm.py        # OpenAI LLM wrapper
@@ -131,7 +133,21 @@ The project uses async/await throughout for optimal performance. Key components:
 
 - **LandingAI ADE**: Extracts structured data from PDFs
 - **OpenAI LLM**: Analyzes extracted data with financial expertise
-- **CrewAI**: Orchestrates the workflow between agents
+- **CrewAI with YAML**: Declarative agent and task configuration using YAML files
+
+### Agent & Task Configuration
+
+Agents are defined in `crew/agents.yaml`:
+- `document_extractor`: Extracts structured data from PDFs
+- `financial_analyst`: Analyzes financial data
+- `report_generator`: Generates HTML reports
+
+Tasks are defined in `crew/tasks.yaml`:
+- `extract_documents`: Document extraction task
+- `analyze_financial_data`: Financial analysis task
+- `generate_report`: Report generation task
+
+The crew orchestration in `crew/crew.py` loads these YAML configurations and executes tasks sequentially
 
 ## License
 
